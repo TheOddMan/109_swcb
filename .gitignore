@@ -1,0 +1,9 @@
+swcb01/CCTV/*
+
+swcb01/pyScripts/annoyFiles/*
+
+swcb01/pyScripts/imgNpyFiles/*
+
+swcb01/pyScripts/*.config
+
+swcb01/pyScripts/*.hdf5

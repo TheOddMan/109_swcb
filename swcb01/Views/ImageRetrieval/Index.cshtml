@@ -1,0 +1,109 @@
+﻿@model List<swcb01.Models.ImageModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<style>
+    #ImageRetrieval{
+        display:inline-block;
+        
+    }
+
+    #ImageRetrieval p{
+        display: inline-block;
+        
+    }
+
+    #QueryImage {
+        display: inline-block
+    }
+
+    #SimilarImages .column img{
+        width:200px;
+        height:150px;
+    }
+
+    /* Create two equal columns that floats next to each other */
+    .column {
+        float: left;
+        width: 20%;
+        padding: 10px;
+    }
+
+        .column img {
+            margin-top: 12px;
+        }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .column br {
+        clear: left;
+    }
+
+    .center {
+        height: 450px;
+    }
+
+</style>
+
+<div class="center">
+    <h2>上傳查詢影像</h2><br />
+    <div id="ImageRetrieval">
+        <form action="@Url.Action("Index")" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" id="file" /><br />
+            <input type="submit" value="開始查詢" />
+        </form>
+    </div>
+    @* dssdsdfdf *@
+    @{
+        if (Model == null || Model.Count == 0)
+        {
+            
+        }
+        else
+        {
+            <div id="QueryImage">
+                查詢影像<br />
+                <img src="@Url.Content("~/SearchImage/"+ViewBag.FileName)" width="100" height="100">
+            </div>
+
+            <div id="SimilarImages">
+                <div class="row">
+
+                    @{
+                        foreach (swcb01.Models.ImageModel img in Model.Take(5))
+                        {
+                            <div class="column">
+                                <img src="@Url.Content("~/CCTV/"+img.name)">
+                            </div>
+                        }
+                    }
+
+
+
+                </div>
+
+                <div class="row">
+                    @{
+                        foreach (swcb01.Models.ImageModel img in Model.Skip(5).Take(5))
+                        {
+                            <div class="column">
+                                <img src="@Url.Content("~/CCTV/"+img.name)">
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+                        }
+
+    }
+</div>
+
+
