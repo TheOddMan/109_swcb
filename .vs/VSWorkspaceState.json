@@ -2,6 +2,7 @@
   "ExpandedNodes": [
     "",
     "\\swcb01",
+    "\\swcb01\\App_Start",
     "\\swcb01\\Controllers",
     "\\swcb01\\Views",
     "\\swcb01\\Views\\ImageRetrieval"
