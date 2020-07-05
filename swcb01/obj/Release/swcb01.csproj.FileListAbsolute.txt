@@ -136,3 +136,5 @@ D:\XinYu\109_swcbProject\swcb01\swcb01\bin\zh-Hant\Microsoft.Owin.Security.Micro
 D:\XinYu\109_swcbProject\swcb01\swcb01\obj\Release\swcb01.dll
 D:\XinYu\109_swcbProject\swcb01\swcb01\obj\Release\swcb01.pdb
 D:\XinYu\109_swcbProject\swcb01\swcb01\obj\Release\swcb01.csprojResolveAssemblyReference.cache
+D:\XinYu\109_swcbProject\swcb01\swcb01\obj\Release\swcb01.Migrations.InitialCreate.resources
+D:\XinYu\109_swcbProject\swcb01\swcb01\obj\Release\swcb01.csproj.GenerateResource.Cache

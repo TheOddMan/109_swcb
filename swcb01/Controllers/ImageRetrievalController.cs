@@ -14,6 +14,8 @@ namespace swcb01.Controllers
 {
     public class ImageRetrievalController : Controller
     {
+        ApplicationDbContext db = new ApplicationDbContext();
+
         // GET: ImageRetrieval
         public ActionResult Index()
         {
@@ -54,6 +56,15 @@ namespace swcb01.Controllers
 
             ViewBag.FileName = fileName;
 
+
+            foreach(ImageModel i in result.Images)
+            {
+                string imageId = i.name.Replace(".jpg", "").Split(new string[] { "EvenID_" }, StringSplitOptions.None).Last();
+                ImageDescription a = db.ImageDescription.FirstOrDefault(x => x.PhotoID == imageId);
+                i.description = a.Description;
+            }
+
+            
 
             return View(result.Images);
         }

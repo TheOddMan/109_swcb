@@ -7,6 +7,8 @@ from keras.models import Model
 from PIL import Image as pil_image
 import json
 import warnings
+import pandas as pd
+
 warnings.filterwarnings("ignore")
 
 
@@ -158,7 +160,12 @@ def imageRetrieval(returnJson):
             i = {'name':imgNamesNpy[index]}
             imgNamesList.append(i)
 
-        return imgNamesList
+        imgIdList = [name['name'].replace(".jpg","").split("EvenID_")[-1] for name in imgNamesList]
+
+
+
+
+        return imgNamesList,imgIdList
     else:
         #顯示前10筆最相似的影像
 
@@ -222,6 +229,9 @@ parser.add_argument("--qi", help="Query Image",required=False,type=str)
 args = parser.parse_args()
 # print(os.getcwd())
 imageToSearch = os.path.join(abPathImg,"SearchImage",args.qi)
+# imageToSearch = os.path.join(abPathImg,"SearchImage","type_0_EvenID_635760190164668680.jpg")
+
+
 
 ExecCode = 4
 
@@ -233,11 +243,12 @@ elif ExecCode == 3:
     imageRetrieval(returnJson=False)
 elif ExecCode == 4:
 
-    result = imageRetrieval(returnJson=True)
+    result, resultId = imageRetrieval(returnJson=True)
     json_str = json.dumps(result)
     json_str = "{'Images':"+json_str+"}" #{'Images':[{'name':'xxx.jpg'},{'name':'yyy.jpg'}]}
 
     print(json_str)
+    # print(resultId)
 
     # print(os.getcwd())
 

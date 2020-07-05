@@ -25,6 +25,8 @@ namespace swcb01.Models
         {
         }
 
+        public virtual DbSet<ImageDescription> ImageDescription { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

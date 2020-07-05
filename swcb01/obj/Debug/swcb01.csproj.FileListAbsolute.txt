@@ -136,3 +136,5 @@ D:\XinYu\109_swcbProject\swcb01\swcb01\bin\Microsoft.Dynamic.xml
 D:\XinYu\109_swcbProject\swcb01\swcb01\bin\Microsoft.Scripting.xml
 D:\XinYu\109_swcbProject\swcb01\swcb01\bin\Microsoft.Scripting.Metadata.xml
 D:\XinYu\109_swcbProject\swcb01\swcb01\obj\Debug\swcb01.csprojResolveAssemblyReference.cache
+D:\XinYu\109_swcbProject\swcb01\swcb01\obj\Debug\swcb01.Migrations.InitialCreate.resources
+D:\XinYu\109_swcbProject\swcb01\swcb01\obj\Debug\swcb01.csproj.GenerateResource.Cache
