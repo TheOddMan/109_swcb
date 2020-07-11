@@ -29,19 +29,12 @@ namespace swcb01.Controllers
         {
 
             System.IO.DirectoryInfo di = new DirectoryInfo(Server.MapPath("~/SearchImage"));
-
-
-            foreach (FileInfo f in di.GetFiles())
-            {
-                f.Delete();
-            }
-
-
+            string sessionId = System.Web.HttpContext.Current.Session.SessionID;
 
             string fileName = null;
             if (file.ContentLength > 0)
             {
-                fileName = Path.GetFileName(file.FileName);
+                fileName = sessionId + ".jpg";
                 var path = Path.Combine(Server.MapPath("~/SearchImage"), fileName);
                 file.SaveAs(path);
             }
@@ -64,7 +57,13 @@ namespace swcb01.Controllers
                 i.description = a.Description;
             }
 
-            
+            //var filepath = Path.Combine(Server.MapPath("~/SearchImage"), fileName);
+
+            //if (System.IO.File.Exists(filepath))
+            //{
+            //    System.IO.File.Delete(path);
+            //}
+
 
             return View(result.Images);
         }
@@ -110,7 +109,10 @@ namespace swcb01.Controllers
             string fileName = null;
             if (file.ContentLength > 0)
             {
+                
+
                 fileName = Path.GetFileName(file.FileName);
+
                 var path = Path.Combine(Server.MapPath("~/SearchImage"), fileName);
                 file.SaveAs(path);
             }

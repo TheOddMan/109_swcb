@@ -229,7 +229,7 @@ parser.add_argument("--qi", help="Query Image",required=False,type=str)
 args = parser.parse_args()
 # print(os.getcwd())
 imageToSearch = os.path.join(abPathImg,"SearchImage",args.qi)
-# imageToSearch = os.path.join(abPathImg,"SearchImage","type_0_EvenID_635760190164668680.jpg")
+# imageToSearch = os.path.join("123.jpg")
 
 
 
