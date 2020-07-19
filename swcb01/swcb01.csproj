@@ -307,6 +307,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="FileUploads\" />
+    <Folder Include="ImageSource\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

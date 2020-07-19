@@ -130,8 +130,9 @@
     <h2>上傳查詢影像</h2><br />
     <div id="ImageRetrieval">
         <form action="@Url.Action("Index")" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" id="file" /><br />
-            <input type="submit" value="開始查詢" />
+            <label for="file">選擇圖片 (.jpg/.jpeg/.png):</label>
+            <input type="file" name="file" id="file" accept=".jpg,.jpeg,.png" /><br />
+            <input type="submit" value="開始查詢" disabled />
         </form>
     </div>
 
@@ -240,17 +241,31 @@
             imgDes.innerHTML = input.innerHTML;
         }
 
+        function contains(target, pattern) {
+            var value = 0;
+            pattern.forEach(function (word) {
+                value = value + target.includes(word);
+            });
+            return (value === 1)
+        }
+
         function changeImage(input) {
             var reader;
+            var name = input.files[0].name;
+            var arr = ['.jpg','.png','.jpeg']
+            if (!contains(name, arr)){
+                $('input:submit').attr('disabled', true)
+            } else if (input.files && input.files[0]) {
 
-            if (input.files && input.files[0]) {
                 reader = new FileReader();
-
+                $('input:submit').attr('disabled', false)
                 reader.onload = function (e) {
                     preview.setAttribute('src', e.target.result);
                 }
 
                 reader.readAsDataURL(input.files[0]);
+            } else {
+                $('input:submit').attr('disabled', true)
             }
         }
 

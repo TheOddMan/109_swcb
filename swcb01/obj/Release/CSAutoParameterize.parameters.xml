@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection 應用程式在 web.config 中用來存取資料庫的連接字串。" defaultValue="data source=140.130.36.46;initial catalog=109_swcb;user id=sa;password=swater0;MultipleActiveResultSets=True;App=EntityFramework" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\XinYu\\109_swcbProject\\swcb01\\swcb01\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="swcb01.Models.Model1-Web.config Connection String" description="swcb01.Models.Model1 應用程式在 web.config 中用來存取資料庫的連接字串。" defaultValue="swcb01.Models.Model1_ConnectionString" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\XinYu\\109_swcbProject\\swcb01\\swcb01\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='swcb01.Models.Model1']/@connectionString" />
+  </parameter>
+</parameters>

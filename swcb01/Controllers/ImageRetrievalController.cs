@@ -76,16 +76,19 @@ namespace swcb01.Controllers
             //var userName = user.Translate(typeof(System.Security.Principal.NTAccount));
 
             ProcessStartInfo start = new ProcessStartInfo();
-            start.FileName = "D:/XinYu/Anaconda3/envs/apple/python.exe";
+            //start.FileName = "D:/XinYu/Anaconda3/envs/apple/python.exe"; //LAB電腦python執行環境
+            start.FileName = "C:/ProgramData/Anaconda3/envs/apple/python.exe"; //遠端伺服器python執行環境
             //string cmd = "D:/XinYu/109_swcbProject_server/pyScripts/02_02_01_AE_predictToAnnoyIndex.py";
             string cmd = Path.Combine(Server.MapPath("~/pyScripts"), "02_02_01_AE_predictToAnnoyIndex.py");
             start.Arguments = string.Format("\"{0}\" --qi \"{1}\"", cmd, fileName);
-            string passwordStr = "swater0";
+            //string passwordStr = "swater0"; //LAB電腦IIS密碼
+            string passwordStr = "A056315739"; //遠端伺服器IIS密碼
             SecureString password = new SecureString();
             foreach (char c in passwordStr)
                 password.AppendChar(c);
             start.Password = password;
-            start.UserName = "409LAB00";
+            //start.UserName = "409LAB00";//LAB電腦IIS帳號
+            start.UserName = "administrator"; //遠端伺服器IIS帳號
 
             start.UseShellExecute = false;// Do not use OS shell
             start.CreateNoWindow = true; // We don't need new window
@@ -117,10 +120,12 @@ namespace swcb01.Controllers
                 file.SaveAs(path);
             }
 
+
+
             string result = run_cmd(fileName);
 
 
-
+  
             return View();
             //return RedirectToAction("Index", new { imagesJson = result });
         }
