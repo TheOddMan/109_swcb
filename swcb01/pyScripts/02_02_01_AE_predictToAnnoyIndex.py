@@ -2,12 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from keras.engine.saving import model_from_json
 from annoy import AnnoyIndex
-import os
 from keras.models import Model
 from PIL import Image as pil_image
-import json
-import warnings
-import pandas as pd
+import requests, time, warnings, json, os
 
 warnings.filterwarnings("ignore")
 
@@ -134,6 +131,7 @@ def imageRetrieval(returnJson):
 
     #讀取要拿來搜尋的影像
     train_image = pil_image.open(imageToSearch)
+    train_image = train_image.convert('RGB')
     train_image_for_display = train_image.resize(search_size, pil_image.ANTIALIAS)
     train_image = train_image.resize(input_size, pil_image.ANTIALIAS)
     train_image = np.expand_dims(np.asarray(train_image),axis=0)
@@ -155,17 +153,28 @@ def imageRetrieval(returnJson):
     if returnJson:
 
         imgNamesList = []
-
+        count = 0
         for index in nn_indices:
+            count+=1
+            photoId = imgNamesNpy[index].split(".")[0].split("_")[-1]
             i = {'name':imgNamesNpy[index]}
+            err_list = []
+            try:
+                response = requests.get("https://photo.swcb.gov.tw/api/Media/"+photoId+"/metadata",timeout=0.1)
+
+                response_dic = response.json()
+                i['location'] = response_dic['Location']
+                i['photoDate'] = response_dic['PhotoDate']
+                i['disasterYear'] = response_dic['DisasterYear']
+                i['disasterName'] = response_dic['DisasterName']
+                i['description'] = response_dic['Description']
+            except:
+                err_list.append(photoId)
+
             imgNamesList.append(i)
 
-        imgIdList = [name['name'].replace(".jpg","").split("EvenID_")[-1] for name in imgNamesList]
 
-
-
-
-        return imgNamesList,imgIdList
+        return imgNamesList
     else:
         #顯示前10筆最相似的影像
 
@@ -191,9 +200,9 @@ def imageRetrieval(returnJson):
 
 
 
-abPath = os.path.join("D:\\","XinYu","109_swcbProject_server","pyScripts")
-# abPathImg = os.path.join("D:\\","XinYu","109_swcbProject_server")
+abPath = os.path.join("D:\\","XinYu","109_swcbProject","swcb01","swcb01","pyScripts")
 abPathImg = os.path.join("D:\\","XinYu","109_swcbProject","swcb01","swcb01")
+# abPathImg = os.path.join("D:\\","XinYu","109_swcbProject","swcb01","swcb01")
 
 AEConfig = os.path.join(abPath,'modelAE.config')
 
@@ -227,12 +236,9 @@ from argparse import ArgumentParser
 parser = ArgumentParser()
 parser.add_argument("--qi", help="Query Image",required=False,type=str)
 args = parser.parse_args()
-# print(os.getcwd())
+
 imageToSearch = os.path.join(abPathImg,"SearchImage",args.qi)
-# imageToSearch = os.path.join("123.jpg")
-
-
-
+# imageToSearch = "test.png"
 ExecCode = 4
 
 if ExecCode == 1:
@@ -242,15 +248,18 @@ elif ExecCode == 2:
 elif ExecCode == 3:
     imageRetrieval(returnJson=False)
 elif ExecCode == 4:
-
-    result, resultId = imageRetrieval(returnJson=True)
-    json_str = json.dumps(result)
+    result = imageRetrieval(returnJson=True)
+    json_str = json.dumps(result,ensure_ascii=False)
     json_str = "{'Images':"+json_str+"}" #{'Images':[{'name':'xxx.jpg'},{'name':'yyy.jpg'}]}
 
-    print(json_str)
-    # print(resultId)
+    try:
+        print(json_str)
+    except UnicodeEncodeError as e:
+        json_str = list(json_str)
+        json_str[e.start] = '?'
+        json_str = "".join(json_str)
+        print(json_str)
 
-    # print(os.getcwd())
 
 
 

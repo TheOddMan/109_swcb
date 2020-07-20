@@ -9,6 +9,7 @@ using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Security;
+using System.Text;
 
 namespace swcb01.Controllers
 {
@@ -50,19 +51,13 @@ namespace swcb01.Controllers
             ViewBag.FileName = fileName;
 
 
-            foreach(ImageModel i in result.Images)
-            {
-                string imageId = i.name.Replace(".jpg", "").Split(new string[] { "EvenID_" }, StringSplitOptions.None).Last();
-                ImageDescription a = db.ImageDescription.FirstOrDefault(x => x.PhotoID == imageId);
-                i.description = a.Description;
-            }
-
-            //var filepath = Path.Combine(Server.MapPath("~/SearchImage"), fileName);
-
-            //if (System.IO.File.Exists(filepath))
+            //foreach(ImageModel i in result.Images)
             //{
-            //    System.IO.File.Delete(path);
+            //    string imageId = i.name.Replace(".jpg", "").Split(new string[] { "EvenID_" }, StringSplitOptions.None).Last();
+            //    //ImageDescription a = db.ImageDescription.FirstOrDefault(x => x.PhotoID == imageId);
             //}
+
+         
 
 
             return View(result.Images);
@@ -76,17 +71,21 @@ namespace swcb01.Controllers
             //var userName = user.Translate(typeof(System.Security.Principal.NTAccount));
 
             ProcessStartInfo start = new ProcessStartInfo();
+
             //start.FileName = "D:/XinYu/Anaconda3/envs/apple/python.exe"; //LAB電腦python執行環境
             start.FileName = "C:/ProgramData/Anaconda3/envs/apple/python.exe"; //遠端伺服器python執行環境
-            //string cmd = "D:/XinYu/109_swcbProject_server/pyScripts/02_02_01_AE_predictToAnnoyIndex.py";
+
             string cmd = Path.Combine(Server.MapPath("~/pyScripts"), "02_02_01_AE_predictToAnnoyIndex.py");
             start.Arguments = string.Format("\"{0}\" --qi \"{1}\"", cmd, fileName);
+
             //string passwordStr = "swater0"; //LAB電腦IIS密碼
             string passwordStr = "A056315739"; //遠端伺服器IIS密碼
+
             SecureString password = new SecureString();
             foreach (char c in passwordStr)
                 password.AppendChar(c);
             start.Password = password;
+
             //start.UserName = "409LAB00";//LAB電腦IIS帳號
             start.UserName = "administrator"; //遠端伺服器IIS帳號
 
